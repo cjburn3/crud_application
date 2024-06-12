@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function Management() {
   const [items, setItems] = useState([]);
@@ -26,6 +26,11 @@ export default function Management() {
     setEditItem(items[index]);
   };
 
+  const deleteItem = (index) => {
+    const updatedItems = items.filter((_, i) => i !== index);
+    setItems(updatedItems);
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Management Page</h1>
@@ -40,7 +45,7 @@ export default function Management() {
       </div>
       <ul>
         {items.map((item, index) => (
-          <li key={index} className="border-b py-2 flex justify-between">
+          <li key={index} className="border-b py-2 flex justify-between items-center">
             {index === editIndex ? (
               <>
                 <input
@@ -54,7 +59,10 @@ export default function Management() {
             ) : (
               <>
                 <span>{item}</span>
-                <button onClick={() => startEditItem(index)} className="bg-yellow-500 text-white p-2">Edit</button>
+                <div>
+                  <button onClick={() => startEditItem(index)} className="bg-yellow-500 text-white p-2 mr-2">Edit</button>
+                  <button onClick={() => deleteItem(index)} className="bg-red-500 text-white p-2">Delete</button>
+                </div>
               </>
             )}
           </li>
