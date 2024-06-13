@@ -2,14 +2,14 @@
 import { useState } from 'react';
 
 export default function Management() {
-  const [items, setItems] = useState([]);
-  const [newItem, setNewItem] = useState("");
+  const [items, setItems] = useState(['Sample Task 1', 'Sample Task 2']);
+  const [newItem, setNewItem] = useState('');
   const [editIndex, setEditIndex] = useState(null);
-  const [editItem, setEditItem] = useState("");
+  const [editItem, setEditItem] = useState('');
 
   const addItem = () => {
     setItems([...items, newItem]);
-    setNewItem("");
+    setNewItem('');
   };
 
   const editCurrentItem = () => {
@@ -18,7 +18,7 @@ export default function Management() {
     );
     setItems(updatedItems);
     setEditIndex(null);
-    setEditItem("");
+    setEditItem('');
   };
 
   const startEditItem = (index) => {
