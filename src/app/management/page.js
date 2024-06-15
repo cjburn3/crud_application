@@ -1,75 +1,50 @@
-"use client"
-import Layout from '../layout';
+'use client';
+import { useState } from 'react';
 
-export default function Management() {
-  const [items, setItems] = useState(['Sample Task 1', 'Sample Task 2']);
+export default function ManagementPage() {
+  const [items, setItems] = useState([{ id: 1, name: 'Item 1' }, { id: 2, name: 'Item 2' }]);
   const [newItem, setNewItem] = useState('');
-  const [editIndex, setEditIndex] = useState(null);
-  const [editItem, setEditItem] = useState('');
 
   const addItem = () => {
-    setItems([...items, newItem]);
+    const id = items.length ? items[items.length - 1].id + 1 : 1;
+    setItems([...items, { id, name: newItem }]);
     setNewItem('');
   };
 
-  const editCurrentItem = () => {
-    const updatedItems = items.map((item, index) => 
-      index === editIndex ? editItem : item
-    );
-    setItems(updatedItems);
-    setEditIndex(null);
-    setEditItem('');
+  const deleteItem = (id) => {
+    setItems(items.filter(item => item.id !== id));
   };
 
-  const startEditItem = (index) => {
-    setEditIndex(index);
-    setEditItem(items[index]);
-  };
-
-  const deleteItem = (index) => {
-    const updatedItems = items.filter((_, i) => i !== index);
-    setItems(updatedItems);
+  const editItem = (id, name) => {
+    setItems(items.map(item => (item.id === id ? { ...item, name } : item)));
   };
 
   return (
-    <Layout>
-      <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Management Page</h1>
-        <div className="mb-4">
-          <input
-            type="text"
-            value={newItem}
-            onChange={(e) => setNewItem(e.target.value)}
-            className="border p-2 mr-2"
-          />
-          <button onClick={addItem} className="bg-blue-500 text-white p-2">Add Item</button>
-        </div>
-        <ul>
-          {items.map((item, index) => (
-            <li key={index} className="border-b py-2 flex justify-between items-center">
-              {index === editIndex ? (
-                <>
-                  <input
-                    type="text"
-                    value={editItem}
-                    onChange={(e) => setEditItem(e.target.value)}
-                    className="border p-2 mr-2"
-                  />
-                  <button onClick={editCurrentItem} className="bg-green-500 text-white p-2">Save</button>
-                </>
-              ) : (
-                <>
-                  <span>{item}</span>
-                  <div>
-                    <button onClick={() => startEditItem(index)} className="bg-yellow-500 text-white p-2 mr-2">Edit</button>
-                    <button onClick={() => deleteItem(index)} className="bg-red-500 text-white p-2">Delete</button>
-                  </div>
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
+    <div>
+      <h1 className="text-2xl font-bold mb-4">Management Page</h1>
+      <ul>
+        {items.map(item => (
+          <li key={item.id} className="border p-2 mb-2">
+            <input
+              type="text"
+              value={item.name}
+              onChange={(e) => editItem(item.id, e.target.value)}
+              className="border p-1"
+            />
+            <button onClick={() => deleteItem(item.id)} className="ml-2 text-red-500">Delete</button>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-4">
+        <input
+          type="text"
+          value={newItem}
+          onChange={(e) => setNewItem(e.target.value)}
+          placeholder="New Item"
+          className="border p-2"
+        />
+        <button onClick={addItem} className="ml-2 p-2 bg-blue-500 text-white">Add</button>
       </div>
-    </Layout>
+    </div>
   );
 }

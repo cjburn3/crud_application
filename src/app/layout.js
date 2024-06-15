@@ -8,7 +8,7 @@ export default function Layout({ children }) {
         {children}
       </main>
       <footer className="bg-gray-800 text-white p-4 text-center">
-        <p>&copy; 2024 My CRUD App. All rights reserved.</p>
+        © 2024 My CRUD App
       </footer>
     </div>
   );
