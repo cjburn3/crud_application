@@ -1,50 +1,35 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import Layout from '../layout';
 
 export default function ManagementPage() {
-  const [items, setItems] = useState([{ id: 1, name: 'Item 1' }, { id: 2, name: 'Item 2' }]);
+  const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('');
 
   const addItem = () => {
-    const id = items.length ? items[items.length - 1].id + 1 : 1;
-    setItems([...items, { id, name: newItem }]);
+    setItems([...items, newItem]);
     setNewItem('');
   };
 
-  const deleteItem = (id) => {
-    setItems(items.filter(item => item.id !== id));
-  };
-
-  const editItem = (id, name) => {
-    setItems(items.map(item => (item.id === id ? { ...item, name } : item)));
-  };
-
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Management Page</h1>
-      <ul>
-        {items.map(item => (
-          <li key={item.id} className="border p-2 mb-2">
-            <input
-              type="text"
-              value={item.name}
-              onChange={(e) => editItem(item.id, e.target.value)}
-              className="border p-1"
-            />
-            <button onClick={() => deleteItem(item.id)} className="ml-2 text-red-500">Delete</button>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-4">
+    <Layout>
+      <div>
+        <h2 className="text-xl font-bold mb-2">Management Page</h2>
+        <ul>
+          {items.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
         <input
           type="text"
           value={newItem}
           onChange={(e) => setNewItem(e.target.value)}
-          placeholder="New Item"
           className="border p-2"
         />
-        <button onClick={addItem} className="ml-2 p-2 bg-blue-500 text-white">Add</button>
+        <button onClick={addItem} className="ml-2 bg-blue-500 text-white p-2">
+          Add Item
+        </button>
       </div>
-    </div>
+    </Layout>
   );
 }
