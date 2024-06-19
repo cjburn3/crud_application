@@ -45,18 +45,22 @@
 //     </html>
 //   );
 
-import React from 'react';
+import './globals.css';
 
-export default function Layout({ children }) {
+export const metadata = {
+  title: 'CRUD Application',
+  description: 'A simple CRUD application',
+};
+
+export default function RootLayout({ children }) {
   return (
-    <div className="container mx-auto p-4">
-      <header>
-        <h1 className="text-2xl font-bold mb-4">My Application</h1>
-      </header>
-      <main>{children}</main>
-      <footer className="mt-4">
-        <p>© 2024 My Application</p>
-      </footer>
-    </div>
+    <html lang="en">
+      <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" />
+      </head>
+      <body>
+        {children}
+      </body>
+    </html>
   );
 }
