@@ -1,14 +1,20 @@
-// 'use client';
-import React from 'react';
-import Layout from './layout';
+import { useState } from 'react';
 
 export default function HomePage() {
+  const [items, setItems] = useState([]);
+
   return (
-    <Layout>
-      <div>
-        <h2 className="text-xl font-bold mb-2">Home Page</h2>
-        <p>Welcome to the home page!</p>
-      </div>
-    </Layout>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Home Page</h1>
+      {items.length === 0 ? (
+        <p>No items available</p>
+      ) : (
+        <ul className="list-disc pl-5">
+          {items.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
